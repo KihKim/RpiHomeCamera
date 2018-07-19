@@ -17,7 +17,7 @@ def on_message(client, userdata, msg):
     print(m)
     
 client = mqtt.Client()
-client.connect('192.168.0.12',1883,60)
+client.connect('localhost',1883,60)
 client.on_connect = on_connect
 client.on_message = on_message
 
@@ -39,17 +39,13 @@ def gen(camera):
 @app.route('/Open/')
 def button_clicked():
     global client
-    client = mqtt.Client()
-    client.connect('192.168.0.12',1883,60)
-    client.publish('Window','Open')
+    client.publish('Led','Open')
     return redirect('/')
    
 @app.route('/Close/')
 def button_clicked2():
     global client
-    client = mqtt.Client()
-    client.connect('192.168.0.12',1883,60)
-    client.publish('Window','Close')
+    client.publish('Led','Close')
     return redirect('/')
    
 @app.route('/video')
@@ -58,4 +54,4 @@ def video():
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-   app.run(host='192.168.0.12', debug=True,threaded = True , port = 8002)
+   app.run(host='localhost', debug=True,threaded = True , port = 5000)
